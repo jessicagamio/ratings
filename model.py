@@ -13,21 +13,24 @@ db = SQLAlchemy()
 # Model definitions
 
 class User(db.Model):
-    """User of ratings website."""
+    """User of ratings website.""" 
+ 
+
+    # def __repr__(self):
+    #     """Provide helpful representation when printed."""
+    #     return f"<User user_id={self.user_id} email={self.email}>"
 
     __tablename__ = "users"
 
     user_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    email = db.Column(db.String(64), nullable=True)
-    password = db.Column(db.String(64), nullable=True)
+    
     age = db.Column(db.Integer, nullable=True)
     zipcode = db.Column(db.String(15), nullable=True)
+    email = db.Column(db.String(64), nullable=True)
+    password = db.Column(db.String(64), nullable=True)
 
 
-    def __repr__(self):
-        """Provide helpful representation when printed."""
-
-        return f"<User user_id={self.user_id} email={self.email}>"
+   
 
 # Put your Movie and Rating model classes here.
 
@@ -40,6 +43,7 @@ class Ratings(db.Model):
     movie_id = db.Column(db.Integer, nullable = False)
     user_id = db.Column(db.Integer, nullable = False)
     score = db.Column(db.Integer, nullable = False)
+    time_stamp = db.Column(db.Integer, nullable = False)
 
 class Movies(db.Model):
     __tablename__ = "movies"
