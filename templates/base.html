@@ -1,9 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <div>
+        <form action= "/logout" method= "GET">
+
+            <input type="submit" name="submit" value="logout">
+
+        </form>
+    </div>
     <title>Ratings</title>
 </head>
 <body>
+
+
+    {% for message in get_flashed_messages() %}
+        {{message}} 
+    {% endfor %}
+    <br>
     Ratings
     <hr>
 

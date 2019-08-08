@@ -35,7 +35,7 @@ def user_list():
 def register_form():
     """Show Registration form"""
 
-    return render_template("register_form.html")
+    return render_template("registration_form.html")
 
 @app.route('/register', methods =["POST"])
 def register_process():
@@ -44,7 +44,8 @@ def register_process():
     email = request.form.get("email")
     password = request.form.get("password")
 
-    if User.query.filter(User.email.in_(email)):
+    # if User.query.filter(User.email.in_(email)):
+    if User.query.filter(User.email == email).first():
         return redirect('/') 
 
     else:
@@ -52,6 +53,45 @@ def register_process():
         db.session.add(user)
         db.session.commit()
         return redirect('/')
+
+@app.route('/showlog')
+def show_login_form():
+    """show login form"""
+
+    return render_template("login.html")
+
+
+@app.route('/login')
+def login_form():
+    email = request.args.get("email")
+    password = request.args.get("password")
+
+
+    if db.session.query(User.email).filter(User.email == email).first():
+        record= User.query.filter(User.email == email).first()
+        # print("==>",record.user_id)
+        session['user'] = record.user_id
+        flash("logged in as %s" % record.user_id)
+        return redirect('/')
+    else:
+        flash("wrong password")
+        return redirect('/showlog')
+
+
+# @app.route('/logoutform')
+# def logout_form():
+#     """display log out form"""
+
+#     return render_template('logout.html')
+
+
+@app.route('/logout')
+def logout():
+    """display log out form"""
+    session.pop('user')
+    flash("Logged Out")
+
+    return redirect('/')
 
 
 
